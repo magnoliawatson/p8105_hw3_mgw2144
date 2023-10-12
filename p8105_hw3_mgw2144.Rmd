@@ -25,3 +25,27 @@ options(
 scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 ```
+
+## Problem 1 
+
+## Problem 2 
+
+```{r}
+data("brfss_smart2010")
+
+brfss_smart2010_df = 
+  brfss_smart2010 %>% 
+  janitor::clean_names() %>% 
+  rename(
+    location_abbr = locationabbr,
+    location_desc = locationdesc
+  ) %>% 
+  filter(topic == "Overall Health") %>% 
+  filter(response == c("Excellent", "Very good", "Good", "Fair", "Poor")) %>% 
+  mutate(
+    response = factor(response, levels = c("Poor", "Fair", "Good", "Very good", "Excellent"), ordered = TRUE)) %>% 
+  arrange(response)
+
+```
+
+Data was cleaned to re-format some variable names and clean the column names, focus on the "Overall Health" topic, inlcude only participatns whose answers ranged from "Excellent" to "Poor", and so that the responses were organized from "Poor" to "Excellent". 
