@@ -121,9 +121,6 @@ ggsave("brfss_two.pdf")
 
 ## Problem 3
 
-## instructions
-Load, tidy, merge, and otherwise organize the data sets. Your final dataset should include all originally observed variables;and encode data with reasonable variable classes (i.e. not numeric, and using factors with the ordering of tables and plots in mind).
-
 ```{r}
 nhanes_accel =
   read_csv("C:/Users/magno/Desktop/p8105_hw3_mgw2144/data/nhanes_accel.csv") %>% 
@@ -146,7 +143,10 @@ nhanes =
     education = case_when(
       education == 1 ~ "less than high school",
       education == 2 ~ "high school equivalent",
-      education == 3 ~ "more than high school")
+      education == 3 ~ "more than high school")) %>% 
+  mutate(
+    sex = forcats::fct_relevel(sex, "male", "female"),
+    education = forcats::fct_relevel(education, "less than high school", "high school equivalent", "more than high school")
   )
 ```
 
