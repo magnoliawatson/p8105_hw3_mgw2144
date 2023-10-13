@@ -39,7 +39,7 @@ brfss_smart2010_df =
     state_county = locationdesc
   ) %>% 
   filter(topic == "Overall Health") %>% 
-  filter(response == c("Excellent", "Very good", "Good", "Fair", "Poor")) %>% 
+  filter(response %in% c("Excellent", "Very good", "Good", "Fair", "Poor")) %>% 
   mutate(
     response = factor(response, levels = c("Poor", "Fair", "Good", "Very good", "Excellent"), ordered = TRUE)) %>% 
   arrange(response)
@@ -114,3 +114,7 @@ ggsave("brfss_two.pdf")
 ```
 
 ## description
+
+## Problem 3
+
+
