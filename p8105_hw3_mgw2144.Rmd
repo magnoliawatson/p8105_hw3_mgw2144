@@ -9,6 +9,10 @@ library(tidyverse)
 library(ggridges)
 library(patchwork)
 library(p8105.datasets)
+library(here)
+rm(list=ls())
+project.folder=
+  paste0(print(here::here()),'/')
 
 knitr::opts_chunk$set(
   fig.width = 8,
@@ -117,4 +121,32 @@ ggsave("brfss_two.pdf")
 
 ## Problem 3
 
+## instructions
+Load, tidy, merge, and otherwise organize the data sets. Your final dataset should include all originally observed variables;and encode data with reasonable variable classes (i.e. not numeric, and using factors with the ordering of tables and plots in mind).
+
+```{r}
+nhanes_accel =
+  read_csv("C:/Users/magno/Desktop/p8105_hw3_mgw2144/data/nhanes_accel.csv") %>% 
+  janitor::clean_names()
+
+nhanes_covar =
+  read_csv("C:/Users/magno/Desktop/p8105_hw3_mgw2144/data/nhanes_covar.csv", skip = 4) %>% 
+  janitor::clean_names() %>% 
+  drop_na()
+
+nhanes = 
+  nhanes_accel %>% 
+  inner_join(nhanes_covar, by = "seqn") %>% 
+  relocate(seqn, sex, age, bmi, education) %>% 
+  filter(age >= 21) %>% 
+  mutate(
+    sex = case_when(
+      sex == 1 ~ "male",
+      sex == 2 ~ "female"),
+    education = case_when(
+      education == 1 ~ "less than high school",
+      education == 2 ~ "high school equivalent",
+      education == 3 ~ "more than high school")
+  )
+```
 
