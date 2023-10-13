@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
   out.width = "90%"
 )
 
-theme_set(theme_minimal())
-
 options(
   ggplot2.continuous.colour = "viridis",
   ggplot2.continuous.fill = ("viridis"))
@@ -87,15 +85,32 @@ brfss_exc =
       x = "Year",
       y = "Average Data Value"
     )
+
+ggsave("brfss_exc.pdf")
  
 ```
 
 The result of this code is a "spaghetti" plot with one line for each state in the data set as is represented by the state abbreviation. Each data point connected by lines represents the average data value in percent for each year by state. The average data value is represented by the y-axis and the range of the graph on the y-axis is 10%-35%. Year is represented on the x-axis with a range of 2002-2010. 
 
-## instructions
-
-Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
 ```{r}
+brfss_two = 
+ brfss_smart2010_df%>% 
+  filter(
+    state == "NY", year %in% c(2006, 2010)) %>% 
+  mutate(
+    state_county = sub(" County", "", state_county),
+    state_county = sub("NY - ", "", state_county)
+  ) %>% 
+ggplot(aes(x = response, y = data_value, fill = response))+
+  geom_bar(stat = "identity")+
+  facet_grid(state_county~year)+
+  labs(
+    x = "Response",
+    y = "Average Data Value (%)",
+    title = "Average Data Value For New York Counties in 2006 and 2010 by Response Type"
+  )
 
+ggsave("brfss_two.pdf")
 ```
 
+## description
