@@ -52,10 +52,6 @@ brfss_smart2010_df =
 
 Data was cleaned to re-format some variable names and clean the column names, focus on the "Overall Health" topic, include only participants whose answers ranged from "Excellent" to "Poor", and so that the responses were organized from "Poor" to "Excellent". 
 
-### instructions 
-
-In 2002, which states were observed at 7 or more locations? What about in 2010?
-
 ```{r}
 brfss_2002 = 
   brfss_smart2010_df %>% 
@@ -90,7 +86,7 @@ brfss_exc =
       y = "Average Data Value"
     )
 
-ggsave("brfss_exc.pdf")
+brfss_exc
  
 ```
 
@@ -114,7 +110,7 @@ ggplot(aes(x = response, y = data_value, fill = response))+
     title = "Average Data Value For New York Counties in 2006 and 2010 by Response Type"
   )
 
-ggsave("brfss_two.pdf")
+brfss_two
 ```
 
 ## description
@@ -163,7 +159,9 @@ sex_age_education =
   ggplot(aes(x = age, fill = sex))+
   geom_histogram(position = "dodge", binwidth = 5) +
   facet_grid(sex~education) +
-  labs(title = "Age Distribution by Sex and Education Level", x = "Age", y = "Count")
+  labs(title = "Age Distribution by Sex and Education Level", x = "Age", y = "Count") 
+
+sex_age_education
 ```
 
 ## comment on these 
