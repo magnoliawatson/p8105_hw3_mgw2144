@@ -188,5 +188,27 @@ total_act_plot
 ```
 ## Comment on your plot
 
-## instructions
-Accelerometer data allows the inspection activity over the course of the day. Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
+```{r}
+
+nhanes_hour <- nhanes %>%
+  pivot_longer(cols = starts_with("min"), names_to = "minute", values_to = "activity") %>%
+  mutate(
+    minute = as.numeric(gsub("min", "", minute)),  
+    hour = (minute - 1) %/% 60) %>%
+  group_by(education, sex, hour) %>%
+  summarize(mean_activity = mean(activity)) 
+
+day_plot = 
+  nhanes_hour %>% 
+  ggplot(aes(x = hour, y = mean_activity, color = sex)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_grid(.~education) +
+  labs(
+    title = "24-Hour Activity Time by Education Level and Sex", x = "Hour", y = "Average Activity Time")
+
+day_plot
+```
+## describe
+
+Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
