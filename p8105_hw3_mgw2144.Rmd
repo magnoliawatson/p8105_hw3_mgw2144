@@ -9,10 +9,6 @@ library(tidyverse)
 library(ggridges)
 library(patchwork)
 library(p8105.datasets)
-library(here)
-rm(list=ls())
-project.folder=
-  paste0(print(here::here()),'/')
 
 knitr::opts_chunk$set(
   fig.width = 8,
