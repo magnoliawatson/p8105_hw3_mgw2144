@@ -181,7 +181,8 @@ total_act_plot =
   ggplot(aes(x = age, y = total_activity, color = total_activity)) +
   geom_point() +
   geom_smooth(se = FALSE) +
-  facet_grid(sex~education)
+  facet_grid(sex~education) +
+  labs(title = "Total Activity and Age by Sex and Education Level", x = "Age", y = "Total Activity in Minutes")
 
 total_act_plot
 ```
